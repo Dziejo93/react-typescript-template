@@ -1,6 +1,6 @@
-import 'src/styled';
+import 'src/types/styledstyled';
 
-import theme from './styles/theme';
+import theme from 'src/styles/theme';
 
 type AppThemeInterface = typeof theme;
 
