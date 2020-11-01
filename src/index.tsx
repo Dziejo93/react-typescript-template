@@ -7,8 +7,8 @@ import store from 'src/store';
 import { ThemeProvider } from 'styled-components';
 
 import { App } from './App';
+import theme from './assets/theme';
 import * as serviceWorker from './serviceWorker';
-import theme from './styles/theme';
 
 ReactDOM.render(
   <React.StrictMode>
@@ -18,6 +18,7 @@ ReactDOM.render(
       </ThemeProvider>
     </Provider>
   </React.StrictMode>,
+
   document.getElementById('root'),
 );
 

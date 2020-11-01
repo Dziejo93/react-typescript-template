@@ -1,15 +1,14 @@
 import 'bootstrap/dist/css/bootstrap.css';
 
 import React from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import { Dashboard } from 'src/components/dashboard';
+import { DefaultLayout } from 'src/components/layouts';
+
+import { Routes } from './routes';
 
 export function App() {
   return (
-    <Router>
-      <Switch>
-        <Route exact path="/" component={Dashboard} />
-      </Switch>
-    </Router>
+    <DefaultLayout>
+      <Routes />
+    </DefaultLayout>
   );
 }
