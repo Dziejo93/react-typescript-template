@@ -1,6 +1,12 @@
 import { AxiosResponse } from 'axios';
 import { Reducer, useEffect, useReducer } from 'react';
 
+enum ACTIONS {
+  FETCH_INIT = 'FETCH_INIT',
+  FETCH_SUCCESS = 'FETCH_SUCCESS',
+  FETCH_FAILURE = 'FETCH_FAILURE',
+}
+
 interface useFetchProps<T, P> {
   initialData: T;
   resourceName: (params?: P) => Promise<AxiosResponse<any>>;
@@ -13,26 +19,26 @@ interface StateProps<T> {
 }
 
 interface ActionProps {
-  type: 'FETCH_INIT' | 'FETCH_SUCCESS' | 'FETCH_FAILURE';
+  type: ACTIONS;
   payload?: any;
 }
 
 const dataFetchReducer = <T>(state: StateProps<T>, action: ActionProps) => {
   switch (action.type) {
-    case 'FETCH_INIT':
+    case ACTIONS.FETCH_INIT:
       return {
         ...state,
         isLoading: true,
         isError: false,
       };
-    case 'FETCH_SUCCESS':
+    case ACTIONS.FETCH_SUCCESS:
       return {
         ...state,
         isLoading: false,
         isError: false,
         data: action.payload,
       };
-    case 'FETCH_FAILURE':
+    case ACTIONS.FETCH_FAILURE:
       return {
         ...state,
         isLoading: false,
@@ -56,18 +62,18 @@ const useFetch = <T, P>({ resourceName, params, initialData }: useFetchProps<T, 
     let didCancel = false;
 
     const fetchData = async () => {
-      dispatch({ type: 'FETCH_INIT' });
+      dispatch({ type: ACTIONS.FETCH_INIT });
 
       try {
         const stringifiedParams = paramsStringified && JSON.parse(paramsStringified);
         const result = await resourceName(stringifiedParams);
 
         if (!didCancel) {
-          dispatch({ type: 'FETCH_SUCCESS', payload: result.data });
+          dispatch({ type: ACTIONS.FETCH_SUCCESS, payload: result.data });
         }
       } catch (error) {
         if (!didCancel) {
-          dispatch({ type: 'FETCH_FAILURE', payload: error });
+          dispatch({ type: ACTIONS.FETCH_FAILURE, payload: error });
         }
       }
     };
