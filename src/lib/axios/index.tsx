@@ -17,7 +17,9 @@ axiosInstance.interceptors.request.use(
   async (config) => {
     const token = localStorage.getItem('accessToken');
 
-    config.headers.common.Authorization = `Bearer ${token}`;
+    if (token) {
+      config.headers.common.Authorization = `Bearer ${token}`;
+    }
     return config;
   },
   (error) => {
