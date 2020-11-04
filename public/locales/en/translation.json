@@ -1,0 +1,10 @@
+{
+  "resources": {
+    "register": "/registration",
+    "session": "/session"
+  },
+  "routes": {
+    "login": "/login",
+    "dashboard": "/dashboard"
+  }
+}
