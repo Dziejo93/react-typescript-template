@@ -9,7 +9,7 @@ enum ACTIONS {
 
 interface useFetchProps<T, P> {
   initialData: T;
-  resourceName: (params?: P) => Promise<AxiosResponse<any>>;
+  resourceName: (() => Promise<AxiosResponse>) | ((params: P) => Promise<AxiosResponse>);
   params?: P;
 }
 interface StateProps<T> {
