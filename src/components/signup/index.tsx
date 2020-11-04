@@ -1,13 +1,14 @@
 import React, { BaseSyntheticEvent } from 'react';
 import Row from 'react-bootstrap/Row';
 import { FieldValues, useForm } from 'react-hook-form';
+import { useHistory } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import { SignUpForm } from 'src/components/forms/signup';
-import axiosInstance from 'src/lib/axios';
+import { postRegister } from 'src/resources/register';
 
 type Inputs = {
   password: string;
   email: string;
-  isSavePassword: boolean;
 };
 type OnSubmit<Data extends FieldValues> = (
   data: Data,
@@ -15,16 +16,20 @@ type OnSubmit<Data extends FieldValues> = (
 ) => void | Promise<void>;
 
 export const SignUp = () => {
-  const { register, errors, handleSubmit } = useForm<Inputs>({});
+  const { push } = useHistory();
+  const { register, errors, handleSubmit } = useForm<Inputs>({ defaultValues: { email: '', password: '' } });
 
   const onSubmit: OnSubmit<Inputs> = async (data, event) => {
     event?.preventDefault();
-    const { email, password } = data;
+
     try {
-      await axiosInstance.post('/registration', { user: { email, password } });
-      alert('Success');
-    } catch (e) {
-      console.log(e);
+      const { email, password } = data;
+
+      await postRegister({ email, password });
+      toast('wow success');
+      push('/login');
+    } catch (error) {
+      throw error;
     }
   };
 

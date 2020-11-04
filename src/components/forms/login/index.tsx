@@ -29,7 +29,13 @@ const LoginForm = ({ submitForm, register }: Props) => {
       <h4>Login</h4>
       <Form.Group>
         <Form.Label>Email address</Form.Label>
-        <Form.Control name="email" type="email" placeholder="Enter email" ref={register(validationOptions.email)} />
+        <Form.Control
+          name="email"
+          type="email"
+          placeholder="Enter email"
+          autoComplete="email"
+          ref={register(validationOptions.email)}
+        />
       </Form.Group>
       <Form.Group>
         <Form.Label>Password</Form.Label>

@@ -1,7 +1,10 @@
-import React, { BaseSyntheticEvent } from 'react';
+import React, { BaseSyntheticEvent, useEffect } from 'react';
 import Row from 'react-bootstrap/Row';
 import { FieldValues, useForm } from 'react-hook-form';
-import axiosInstance from 'src/lib/axios';
+import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
+import { submitLogin } from 'src/store/auth/auth.action';
+import { ApplicationState } from 'src/store/reducers';
 
 import LoginForm from '../forms/login';
 
@@ -16,18 +19,23 @@ type OnSubmit<Data extends FieldValues> = (
 ) => void | Promise<void>;
 
 export const Login = () => {
+  const dispatch = useDispatch();
+  const auth = useSelector((state: ApplicationState) => state.auth);
+  const { push } = useHistory();
   const { register, errors, handleSubmit } = useForm<Inputs>({ defaultValues: { email: '', password: '' } });
+
+  useEffect(() => {
+    if (auth.status === 'success') {
+      push('/dashboard');
+    }
+  }, [auth, push]);
 
   const onSubmit: OnSubmit<Inputs> = async (data, event) => {
     event?.preventDefault();
 
     const { email, password } = data;
-    try {
-      await axiosInstance.post('/session', { session: { email, password } });
-      alert('Success');
-    } catch (e) {
-      console.log(e);
-    }
+
+    dispatch(submitLogin({ email, password }));
   };
 
   return (
