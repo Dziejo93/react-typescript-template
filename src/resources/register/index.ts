@@ -7,4 +7,4 @@ export type PostRegisterProps = {
 };
 
 export const postRegister = ({ email, password }: PostRegisterProps) =>
-  axiosInstance.post(i18next.t('routes.register'), { user: { email, password } });
+  axiosInstance.post(i18next.t('resources.register'), { user: { email, password } });

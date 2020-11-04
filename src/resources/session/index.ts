@@ -7,4 +7,4 @@ export type PostSessionProps = {
 };
 
 export const postSession = ({ email, password }: PostSessionProps) =>
-  axiosInstance.post(i18next.t('routes.session'), { session: { email, password } });
+  axiosInstance.post(i18next.t('resources.session'), { session: { email, password } });
