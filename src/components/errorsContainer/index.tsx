@@ -10,7 +10,7 @@ type Props = InnerProps;
 export const ErrorsContainer = ({ children }: Props) => {
   useEffect(() => {
     const onUnhandledRejection = (event: PromiseRejectionEvent) => {
-      const errorsDictionary = event.reason;
+      const errorsDictionary = event.reason.response.data.errors;
 
       Object.keys(errorsDictionary).forEach((errorField) => {
         errorsDictionary[errorField].forEach((error: Record<string, string>) =>
