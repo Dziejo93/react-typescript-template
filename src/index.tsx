@@ -1,8 +1,10 @@
 import './index.css';
+import 'src/lib/i18n';
 
-import React from 'react';
+import React, { Suspense } from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
+import { ErrorsContainer } from 'src/components/errorsContainer';
 import store from 'src/store';
 import { ThemeProvider } from 'styled-components';
 
@@ -12,11 +14,15 @@ import * as serviceWorker from './serviceWorker';
 
 ReactDOM.render(
   <React.StrictMode>
-    <Provider store={store}>
-      <ThemeProvider theme={theme}>
-        <App />
-      </ThemeProvider>
-    </Provider>
+    <Suspense fallback={<div>Loading..</div>}>
+      <Provider store={store}>
+        <ThemeProvider theme={theme}>
+          <ErrorsContainer>
+            <App />
+          </ErrorsContainer>
+        </ThemeProvider>
+      </Provider>
+    </Suspense>
   </React.StrictMode>,
 
   document.getElementById('root'),
